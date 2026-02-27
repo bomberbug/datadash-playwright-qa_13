@@ -5,16 +5,16 @@ const { chromium } = require('playwright');
   const page = await browser.newPage();
 
   const urls = [
-    "PASTE_SEED_42_URL_HERE",
-    "PASTE_SEED_43_URL_HERE",
-    "PASTE_SEED_44_URL_HERE",
-    "PASTE_SEED_45_URL_HERE",
-    "PASTE_SEED_46_URL_HERE",
-    "PASTE_SEED_47_URL_HERE",
-    "PASTE_SEED_48_URL_HERE",
-    "PASTE_SEED_49_URL_HERE",
-    "PASTE_SEED_50_URL_HERE",
-    "PASTE_SEED_51_URL_HERE"
+    "https://sanand0.github.io/tdsdata/js_table/?seed=42",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=43",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=44",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=45",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=46",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=47",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=48",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=49",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=50",
+    "https://sanand0.github.io/tdsdata/js_table/?seed=51"
   ];
 
   let grandTotal = 0;
