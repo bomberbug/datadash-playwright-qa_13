@@ -1,38 +1,59 @@
 const { chromium } = require('playwright');
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
 
   const urls = [
-    "PUT_SEED_42_LINK_HERE",
-    "PUT_SEED_43_LINK_HERE",
-    "PUT_SEED_44_LINK_HERE",
-    "PUT_SEED_45_LINK_HERE",
-    "PUT_SEED_46_LINK_HERE",
-    "PUT_SEED_47_LINK_HERE",
-    "PUT_SEED_48_LINK_HERE",
-    "PUT_SEED_49_LINK_HERE",
-    "PUT_SEED_50_LINK_HERE",
-    "PUT_SEED_51_LINK_HERE"
+    "PASTE_SEED_42_URL_HERE",
+    "PASTE_SEED_43_URL_HERE",
+    "PASTE_SEED_44_URL_HERE",
+    "PASTE_SEED_45_URL_HERE",
+    "PASTE_SEED_46_URL_HERE",
+    "PASTE_SEED_47_URL_HERE",
+    "PASTE_SEED_48_URL_HERE",
+    "PASTE_SEED_49_URL_HERE",
+    "PASTE_SEED_50_URL_HERE",
+    "PASTE_SEED_51_URL_HERE"
   ];
 
   let grandTotal = 0;
 
   for (const url of urls) {
-    await page.goto(url);
+    try {
+      console.log(`Visiting: ${url}`);
 
-    const numbers = await page.$$eval("table td", cells =>
-      cells
-        .map(cell => parseFloat(cell.innerText.trim()))
-        .filter(n => !isNaN(n))
-    );
+      await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
 
-    const pageSum = numbers.reduce((a, b) => a + b, 0);
-    grandTotal += pageSum;
+      // Wait for tables to appear (if dynamically generated)
+      await page.waitForSelector("table", { timeout: 15000 });
+
+      // Extract all numbers from all table cells
+      const numbers = await page.$$eval("table td, table th", cells =>
+        cells
+          .map(cell => {
+            const cleaned = cell.innerText
+              .replace(/,/g, '')        // remove commas
+              .replace(/[^\d.-]/g, ''); // remove non-numeric chars
+            return parseFloat(cleaned);
+          })
+          .filter(n => !isNaN(n))
+      );
+
+      const pageSum = numbers.reduce((sum, value) => sum + value, 0);
+
+      console.log(`Page Sum: ${pageSum}`);
+      grandTotal += pageSum;
+
+    } catch (error) {
+      console.error(`Error processing ${url}`);
+      console.error(error.message);
+    }
   }
 
+  console.log("=================================");
   console.log("FINAL TOTAL:", grandTotal);
+  console.log("=================================");
 
   await browser.close();
 })();
