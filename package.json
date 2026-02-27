@@ -1,0 +1,12 @@
+{
+  "name": "datadash-playwright-qa",
+  "version": "1.0.0",
+  "description": "Automated QA with Playwright and GitHub Actions",
+  "main": "scrape.js",
+  "scripts": {
+    "start": "node scrape.js"
+  },
+  "dependencies": {
+    "playwright": "^1.42.0"
+  }
+}
